@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blockly</title>
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="javascript_compressed.js"></script>
+    <script src="en.js"></script>
+    <style>
+        html, body, #blocklyDiv {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="blocklyDiv"></div>
+<script>
+    var workspace = Blockly.inject('blocklyDiv', {
+        toolbox: '<xml><block type="controls_if"></block><block type="logic_compare"></block></xml>'
+    });
+</script>
+</body>
+</html>
