@@ -19,9 +19,63 @@
 <body>
 <div id="blocklyDiv"></div>
 <script>
+    // Initialize Blockly workspace with an empty toolbox
     var workspace = Blockly.inject('blocklyDiv', {
-        toolbox: '<xml><block type="controls_if"></block><block type="logic_compare"></block></xml>'
+        toolbox: '<xml id="toolbox" style="display: none;"></xml>',
+        grid:
+            {
+                spacing: 20,
+                length: 3,
+                colour: '#ccc',
+                snap: true
+            },
+        trashcan: true,
+        move: {
+            scrollbars: {
+                horizontal: true,
+                vertical: true
+            },
+            drag: true,
+            wheel: false
+        },
+        zoom:
+            {
+                controls: true,
+                wheel: true,
+                startScale: 1.0,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2,
+                pinch: true
+            },
+
     });
+
+    // Function to evaluate and add generated block definitions
+    function addGeneratedBlocks(blocklyCode) {
+        try {
+            console.log("Executing Blockly code:", blocklyCode);
+            eval(blocklyCode);  // Execute the generated Blockly definitions
+
+            // Update the toolbox to add the new blocks
+            const toolboxXml = '<xml>' +
+                blocklyCode.match(/Blockly\.Blocks\['(.*?)'\]/g)
+                    .map(match => `<block type="${match.split("'")[1]}"></block>`)
+                    .join('') +
+                '</xml>';
+
+            workspace.updateToolbox(toolboxXml);  // Update toolbox with new blocks
+        } catch (e) {
+            console.error("Failed to evaluate Blockly code:", e);
+        }
+    }
+
+    // Function to load blocks into the workspace
+    function loadBlocks(xmlText) {
+        console.log("Loading XML blocks:", xmlText);
+        const xml = Blockly.Xml.textToDom(xmlText);
+        Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
+    }
 </script>
 </body>
 </html>

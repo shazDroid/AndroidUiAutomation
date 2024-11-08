@@ -22,10 +22,15 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="UI Automation" anchor="right"
+        <toolWindow id="Blockly" anchor="right"
                     factoryClass="com.shazdroid.automation.uiautomation.presentation.view.BlocklyToolWindowFactory"/>
         <codeInsight.lineMarkerProvider
                 language="XML"
                 implementationClass="com.shazdroid.automation.uiautomation.presentation.components.XmlGutterHandler"/>
+
+        <projectService
+                serviceInterface="com.shazdroid.automation.uiautomation.presentation.services.interfaces.IxmlService"
+                serviceImplementation="com.shazdroid.automation.uiautomation.presentation.services.impl.XmlServiceImpl"/>
     </extensions>
+
 </idea-plugin>
